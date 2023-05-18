@@ -78,5 +78,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    public void Eliminar(View view) {
+
+        AdminSQliteOpenHelper admin = new AdminSQliteOpenHelper(this, "administracion", null, 1);
+        SQLiteDatabase BaseDeDatos = admin.getWritableDatabase();
+
+        String codigo = et_codigo.getText().toString();
+
+        if (!codigo.isEmpty()) {
+
+            int cantidad = BaseDeDatos.delete("articulos","codigo="+codigo,null);
+            BaseDeDatos.close();
+            et_codigo.setText("");
+            et_descripcion.setText("");
+            et_precio.setText("");
+
+            if(cantidad ==1){
+                Toast.makeText(this, "El articulo fue eliminado correctamente:", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "El articulo no se pudo eliminar:", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(this, "debes introducir un codigo del articulo:", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }
